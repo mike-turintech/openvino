@@ -34,6 +34,17 @@ namespace ov::intel_cpu {
 
 using namespace ov::threading;
 
+namespace {
+
+// The set of stream executor property keys is constant, so compute it once (thread-safe static initialization)
+const std::vector<std::string>& get_stream_executor_config_keys() {
+    static const auto keys =
+        IStreamsExecutor::Config{}.get_property(ov::supported_properties.name()).as<std::vector<std::string>>();
+    return keys;
+}
+
+}  // namespace
+
 Config::Config() {
     CPU_DEBUG_CAP_ENABLE(applyDebugCapsProperties());
 
