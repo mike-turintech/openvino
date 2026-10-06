@@ -67,8 +67,7 @@ void Config::applyDebugCapsProperties() {
 #endif
 
 void Config::readProperties(const ov::AnyMap& prop, const ModelType modelType) {
-    const auto streamExecutorConfigKeys =
-        streamExecutorConfig.get_property(ov::supported_properties.name()).as<std::vector<std::string>>();
+    const auto& streamExecutorConfigKeys = get_stream_executor_config_keys();
     for (const auto& kvp : prop) {
         const auto& key = kvp.first;
         const auto& val = kvp.second;
